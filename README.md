@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# Simple Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React weather app showing current weather in a city and the 3 hourly forecast. All the data is from OpenWeather API and Google Cloud API is used for input autocomplete.
+It is designed mobile first with tailwindcss.
 
-Currently, two official plugins are available:
+## <a name="quick-start">Quick Start</a>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Follow these steps to set up the project locally on your machine.
 
-## Expanding the ESLint configuration
+**Prerequisites**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Make sure you have the following installed on your machine:
 
-- Configure the top-level `parserOptions` property like this:
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/en)
+- [npm](https://www.npmjs.com/) (Node Package Manager)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+**Cloning the Repository**
+
+```bash
+git clone https://github.com/bauertim/weatherApp.git
+cd weatherApp
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+**Installation**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Install the project dependencies using npm:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
+```
+
+**Set Up Environment Variables**
+
+Create a new file named `.env` in the root of your project and add the following content:
+
+```env
+VITE_OPENWEATHER_API_KEY=
+VITE_GOOGLE_API_KEY=
+```
+
+Replace the placeholder values with your actual OpenWeather and Google Cloud API keys.
+Using google autocomplete is optional, you can use the commented form in the InputField component of the app.
+
+**Running the Project**
+
+```bash
+npm run dev
 ```
