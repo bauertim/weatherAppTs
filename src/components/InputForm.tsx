@@ -56,9 +56,9 @@ const InputForm = () => {
           onPlaceSelected={(place) => {
             if (place) {
               if (place.name) {
-                setCity(place.name);
+                setCity(place.name.replace(/(\d+,?\s*)+/g, ""));
               } else if (place.formatted_address) {
-                setCity(place.formatted_address);
+                setCity(place.formatted_address.replace(/(\d+,?\s*)+/g, ""));
               }
             }
           }}

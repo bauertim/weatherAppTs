@@ -10,7 +10,6 @@ const CityWeather = () => {
     setWeatherData,
     searchList,
     setSearchList,
-    setForecastData,
     errorFetch,
     setErrorFetch,
   } = useDataContext();
@@ -33,18 +32,6 @@ const CityWeather = () => {
     } catch (error) {
       // console.error(error);
       setErrorFetch(!errorFetch);
-    }
-
-    try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${
-          import.meta.env.VITE_OPENWEATHER_API_KEY
-        }`
-      );
-      setForecastData(response.data);
-      // console.log("forecast data:", response.data);
-    } catch (error) {
-      console.error(error);
     }
   };
 
