@@ -64,11 +64,12 @@ export const fetchDataWeather = async (
       }`
     );
     setWeatherData(response.data);
-    setSearchList(
-      [response.data, ...searchList.slice(0, 5)].filter(
-        (v, i, a) => a.findIndex((t) => t.name === v.name) === i
-      )
+    let data = [response.data, ...searchList.slice(0, 5)].filter(
+      (v, i, a) => a.findIndex((t) => t.name === v.name) === i
     );
+    setSearchList(data);
+    localStorage.setItem("searchHistory", JSON.stringify(data));
+
     // console.log(response.data);
   } catch (error) {
     // console.error(error);

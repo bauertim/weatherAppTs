@@ -1,9 +1,17 @@
 import { useDataContext } from "../context/DataContext";
 import { motion } from "framer-motion";
 import SmallCityBox from "./SmallCityBox";
+import { useEffect } from "react";
 
 const PreviousSearch = () => {
-  const { searchList } = useDataContext();
+  const { searchList, setSearchList } = useDataContext();
+  useEffect(() => {
+    const searchHistory = localStorage.getItem("searchHistory");
+    if (searchHistory) {
+      const searchList = JSON.parse(searchHistory);
+      setSearchList(searchList);
+    }
+  }, []);
   return (
     <motion.div
       initial={{
