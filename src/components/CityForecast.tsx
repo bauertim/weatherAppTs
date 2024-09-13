@@ -1,27 +1,8 @@
 import { useDataContext } from "../context/DataContext";
 import { motion } from "framer-motion";
-import axios from "axios";
-import { useEffect } from "react";
 
 const CityForecast = () => {
-  const { city, forecastData, setForecastData } = useDataContext();
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${
-          import.meta.env.VITE_OPENWEATHER_API_KEY
-        }`
-      );
-      setForecastData(response.data);
-      // console.log("forecast data:", response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    if (city !== "") fetchData();
-  }, [city]);
+  const { forecastData } = useDataContext();
 
   return (
     <motion.div

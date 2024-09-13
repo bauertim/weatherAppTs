@@ -46,7 +46,7 @@ export const DataContext = createContext<DataContextType>({
   setWeatherData: () => {},
   searchList: [],
   setSearchList: () => {},
-  city: "Ljubljana",
+  city: "",
   setCity: () => {},
   forecastData: null,
   setForecastData: () => {},
@@ -57,7 +57,7 @@ export const DataContext = createContext<DataContextType>({
 export const DataContextProvider = ({ children }: PropsWithChildren) => {
   const [weatherData, setWeatherData] = useState(null);
   const [searchList, setSearchList] = useState([]);
-  const [city, setCity] = useState("Ljubljana");
+  const [city, setCity] = useState("");
   const [forecastData, setForecastData] = useState(null);
   const [errorFetch, setErrorFetch] = useState(false);
 

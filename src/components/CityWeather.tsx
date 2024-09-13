@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDataContext } from "../context/DataContext";
-import axios from "axios";
 import { motion } from "framer-motion";
+import {
+  fetchDataForecast,
+  fetchDataForecastCurrent,
+  fetchDataWeather,
+  fetchWeatherDataCurrent,
+} from "../apiCalls/fetchWeather";
+import { getUserLocation } from "../utils/userLocation";
 
 const CityWeather = () => {
   const {
@@ -12,31 +18,60 @@ const CityWeather = () => {
     setSearchList,
     errorFetch,
     setErrorFetch,
+    setForecastData,
   } = useDataContext();
   const [hideDiv, setHideDiv] = useState(true);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${
-          import.meta.env.VITE_OPENWEATHER_API_KEY
-        }`
-      );
-      setWeatherData(response.data);
-      setSearchList(
-        [response.data, ...searchList.slice(0, 5)].filter(
-          (v, i, a) => a.findIndex((t) => t.name === v.name) === i
-        )
-      );
-      // console.log(response.data);
-    } catch (error) {
-      // console.error(error);
-      setErrorFetch(!errorFetch);
-    }
-  };
+  const [userLocation, setUserLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
 
   useEffect(() => {
-    if (city !== "") fetchData();
+    const storage = localStorage.getItem("currentLocation");
+    getUserLocation(setUserLocation);
+    if (storage) {
+      const location = JSON.parse(storage);
+      setUserLocation(location);
+    } else {
+      fetchDataWeather(
+        setWeatherData,
+        setSearchList,
+        searchList,
+        setErrorFetch,
+        errorFetch,
+        "Ljubljana"
+      );
+      fetchDataForecast(setForecastData, "Ljubljana");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userLocation) {
+      fetchWeatherDataCurrent(
+        setWeatherData,
+        setSearchList,
+        searchList,
+        setErrorFetch,
+        errorFetch,
+        userLocation
+      );
+      fetchDataForecastCurrent(setForecastData, userLocation);
+    }
+    console.log(userLocation?.latitude, userLocation?.longitude);
+  }, [userLocation]);
+
+  useEffect(() => {
+    if (city !== "") {
+      fetchDataWeather(
+        setWeatherData,
+        setSearchList,
+        searchList,
+        setErrorFetch,
+        errorFetch,
+        city
+      );
+      fetchDataForecast(setForecastData, city);
+    }
   }, [city]);
 
   return (
