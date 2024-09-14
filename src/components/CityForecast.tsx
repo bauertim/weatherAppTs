@@ -24,17 +24,16 @@ const CityForecast = () => {
           forecastData.list.map((hours, index) => (
             <div
               key={index}
-              className="mr-4 h-20 flex flex-col items-center justify-between"
+              className="mr-4 min-h-20 min-w-9 flex flex-col items-center justify-between"
             >
               <p className="text-center text-sm">
                 {hours.dt_txt.split(" ")[1].split(":")[0]}
               </p>
-              <div className="h-9">
-                <img
-                  src={`http://openweathermap.org/img/wn/${hours.weather[0].icon}.png`}
-                  alt="weather icon"
-                />
-              </div>
+              <img
+                src={`https://openweathermap.org/img/wn/${hours.weather[0].icon}.png`}
+                alt="weather icon"
+                className="w-9 h-9"
+              />
               <p>{hours.main.temp.toFixed(1) + "°"}</p>
             </div>
           ))}

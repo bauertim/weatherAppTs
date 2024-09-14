@@ -105,8 +105,9 @@ const CityWeather = () => {
                 <p>L : {weatherData.main.temp_min.toFixed(0)}°C</p>
               </div>
               <img
-                src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`}
+                src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`}
                 alt="weather icon"
+                className="w-[50px] h-[50px]"
               />
               <div
                 className={`${

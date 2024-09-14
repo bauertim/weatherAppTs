@@ -24,8 +24,9 @@ const SmallCityBox = ({ search }: SmallBoxProps) => {
       >
         <div className="w-28 flex">{search.name}</div>
         <img
-          src={`http://openweathermap.org/img/wn/${search.weather[0].icon}.png`}
+          src={`https://openweathermap.org/img/wn/${search.weather[0].icon}.png`}
           alt="weather icon"
+          className="w-12 h-12"
         />
         <p>{search.main.temp.toFixed(1) + "°"} </p>
       </button>
