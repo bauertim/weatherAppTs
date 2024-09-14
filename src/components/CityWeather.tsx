@@ -1,78 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDataContext } from "../context/DataContext";
 import { motion } from "framer-motion";
-import {
-  fetchDataForecast,
-  fetchDataForecastCurrent,
-  fetchDataWeather,
-  fetchWeatherDataCurrent,
-} from "../apiCalls/fetchWeather";
-import { getUserLocation } from "../utils/userLocation";
+import { useLocationStorage } from "../hooks/useLocationStorage";
+import { useCityFetch } from "../hooks/useCityFetch";
 
 const CityWeather = () => {
-  const {
-    weatherData,
-    city,
-    setWeatherData,
-    searchList,
-    setSearchList,
-    errorFetch,
-    setErrorFetch,
-    setForecastData,
-  } = useDataContext();
+  const { weatherData } = useDataContext();
   const [hideDiv, setHideDiv] = useState(true);
-  const [userLocation, setUserLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
 
-  useEffect(() => {
-    const storage = localStorage.getItem("currentLocation");
-    getUserLocation(setUserLocation);
-    if (storage) {
-      const location = JSON.parse(storage);
-      setUserLocation(location);
-    } else {
-      fetchDataWeather(
-        setWeatherData,
-        setSearchList,
-        searchList,
-        setErrorFetch,
-        errorFetch,
-        "Ljubljana"
-      );
-      fetchDataForecast(setForecastData, "Ljubljana");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (userLocation) {
-      fetchWeatherDataCurrent(
-        setWeatherData,
-        setSearchList,
-        searchList,
-        setErrorFetch,
-        errorFetch,
-        userLocation
-      );
-      fetchDataForecastCurrent(setForecastData, userLocation);
-    }
-    console.log(userLocation?.latitude, userLocation?.longitude);
-  }, [userLocation]);
-
-  useEffect(() => {
-    if (city !== "") {
-      fetchDataWeather(
-        setWeatherData,
-        setSearchList,
-        searchList,
-        setErrorFetch,
-        errorFetch,
-        city
-      );
-      fetchDataForecast(setForecastData, city);
-    }
-  }, [city]);
+  useLocationStorage();
+  useCityFetch();
 
   return (
     <motion.div

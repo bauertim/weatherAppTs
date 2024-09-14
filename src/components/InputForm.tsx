@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useDataContext } from "../context/DataContext";
 import { useFormContext } from "../context/FormContext";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
@@ -51,21 +51,31 @@ const InputForm = () => {
             Can't find the city :/
           </motion.div>
         </AnimatePresence>
-        <ReactGoogleAutocomplete
-          apiKey={import.meta.env.VITE_GOOGLE_API_KEY}
-          onPlaceSelected={(place) => {
-            if (place) {
-              if (place.name) {
-                setCity(place.name.replace(/(\d+,?\s*)+/g, ""));
-              } else if (place.formatted_address) {
-                setCity(place.formatted_address.replace(/(\d+,?\s*)+/g, ""));
+        <div className="flex w-72 relative">
+          <ReactGoogleAutocomplete
+            apiKey={import.meta.env.VITE_GOOGLE_API_KEY}
+            onPlaceSelected={(place) => {
+              if (place) {
+                if (place.name) {
+                  setCity(place.name.replace(/(\d+,?\s*)+/g, ""));
+                } else if (place.formatted_address) {
+                  setCity(place.formatted_address.replace(/(\d+,?\s*)+/g, ""));
+                }
               }
-            }
-          }}
-          value={inputValue}
-          onChange={handleInputChange}
-          className="bg white shadow-md shadow-neutral-300 rounded-full p-2 pl-4 flex w-72 mt-6 mb-4"
-        />
+            }}
+            value={inputValue}
+            onChange={handleInputChange}
+            className="bg-white shadow-md shadow-neutral-300 rounded-full p-2 pl-4 flex w-full mt-6 mb-4"
+          />
+          {inputValue != "" && (
+            <button
+              className="absolute right-3 top-[35px]"
+              onClick={() => setInputValue("")}
+            >
+              <X color="lightgray" size={20} />
+            </button>
+          )}
+        </div>
         <button className="ml-3 mt-1" onClick={() => setCity(inputValue)}>
           <Search size={24} />
         </button>
